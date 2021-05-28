@@ -34,8 +34,10 @@ jobs:
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
+      - setup_remote_docker:
+              version: 19.03.13
       - run:
-          name: yarn install
+          name: yarn Install
           command: yarn install
       - run: bundle exec bin/webpack 
       - run:
