@@ -26,7 +26,7 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    working_directory: ~ct//ct2-ts/src
+    working_directory: ~/ct/ct2-ts/src
     steps:
       - checkout:
           path: ~/ct/ct2-ts
@@ -78,4 +78,4 @@ workflows:
             - test
           filters:
             branches:
-              only: main
+              only: mains
