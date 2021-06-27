@@ -7,10 +7,10 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.7
-    working_directory: ~/ct2-ts/src
+    working_directory: ~/ct/ct2-ts/src
     steps:
       - checkout:
-          path: ~/ct2-ts
+          path: ~/ct/ct2-ts
       - ruby/install-deps
 
   test:
@@ -26,14 +26,20 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    working_directory: ~/ct2-ts/src
+    working_directory: ~/ct/ct2-ts/src
     steps:
       - checkout:
-          path: ~/ct2-ts
+          path: ~/ct/ct2-ts
       - ruby/install-deps
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
+      - setup_remote_docker:
+              version: 19.03.13
+      - run:
+          name: yarn install
+          command: yarn install
+      - run: bundle exec bin/webpack 
       - run:
           name: test
           command: bundle exec rake test
@@ -72,4 +78,4 @@ workflows:
             - test
           filters:
             branches:
-              only: main
+              only: mains
